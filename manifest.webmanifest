@@ -1,7 +1,6 @@
 {
-  "name": "Camino Cycling",
+  "name": "Camino Cycling V2",
   "short_name": "Camino Cycling",
-  "description": "Plan y seguimiento ciclista para el Camino del Norte",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

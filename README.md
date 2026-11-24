@@ -1,30 +1,32 @@
-# Camino Cycling PWA
+# Camino Cycling V2
 
-Aplicación local para planificar y registrar los entrenamientos de diciembre de 2026.
+PWA con autenticación, sincronización con Supabase, caché local, cola offline, navegación mensual, importación de planes e histórico.
 
-## Probar en ordenador
-La PWA necesita servirse por HTTP, no abrirse directamente con `file://`.
+## 1. Crear Supabase
+1. Crea un proyecto en Supabase.
+2. Abre SQL Editor, pega `supabase-schema.sql` y pulsa Run.
+3. En Authentication > Providers, deja Email activado.
+4. En Authentication > URL Configuration añade la URL de GitHub Pages a Site URL y Redirect URLs.
+5. En Project Settings > API copia Project URL y la clave publishable (o anon legacy).
+6. Pégalas en `config.js`. Nunca pegues `service_role`.
 
+## 2. Actualizar GitHub Pages
 1. Descomprime el ZIP.
-2. En la carpeta del proyecto ejecuta `python3 -m http.server 8080`.
-3. Abre `http://localhost:8080`.
+2. En tu repositorio de GitHub abre la pestaña Code.
+3. Add file > Upload files.
+4. Sube el contenido de la carpeta `camino-cycling-v2`, sustituyendo los archivos anteriores. Importante: sube los archivos a la raíz, no la carpeta contenedora.
+5. Commit changes.
+6. Settings > Pages > Deploy from a branch > main > /(root) > Save.
+7. Espera 1-3 minutos y recarga la web. Si conserva una versión antigua, cierra la PWA, abre la URL en Safari y recarga; el service worker cambiará a la caché V2.
 
-## Instalar en móvil
-Publícala en un alojamiento HTTPS como GitHub Pages, Netlify o Vercel.
+## 3. Primer acceso
+1. Abre la PWA y pulsa Acceder.
+2. Crea tu cuenta.
+3. Si Supabase exige verificación, confirma el correo.
+4. Entra con el mismo correo y contraseña en todos tus dispositivos.
 
-### iPhone
-Abre la URL en Safari > Compartir > Añadir a pantalla de inicio.
+## 4. Importar planes mensuales
+Usa `plan-ejemplo-enero-2027.json` como plantilla. En la app: Importar plan > selecciona JSON. Los resultados existentes no se sustituyen si los identificadores son distintos.
 
-### Android
-Abre la URL en Chrome > Instalar aplicación o Añadir a pantalla de inicio.
-
-## Datos
-Los datos se guardan en localStorage del navegador. Usa Exportar para crear copias JSON e Importar para restaurarlas. Borrar los datos del navegador elimina el registro local.
-
-## Archivos
-- index.html: interfaz
-- styles.css: diseño responsive
-- app.js: calendario, edición, métricas, exportación e importación
-- manifest.webmanifest: instalación PWA
-- sw.js: funcionamiento sin conexión
-- icons/: iconos
+## Seguridad
+GitHub Pages publica el código de la web. La clave publishable identifica el proyecto, pero la protección real está en RLS: cada usuario solo puede ver y modificar sus filas. No incluyas jamás la clave service_role.

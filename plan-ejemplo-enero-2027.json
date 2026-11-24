@@ -1,0 +1,13 @@
+[
+  {
+    "date": "2027-01-03",
+    "type": "Bici · Resistencia",
+    "planned": 90,
+    "targetRpe": "3/10",
+    "targetZone": "Z2 cómoda",
+    "targetCadence": "80-90 rpm",
+    "objective": "Construir base aeróbica",
+    "description": "15 min suaves · 60 min continuos cómodos · 15 min vuelta a la calma",
+    "nutrition": "Agua; si desayunas con antelación no hace falta comer durante la sesión"
+  }
+]

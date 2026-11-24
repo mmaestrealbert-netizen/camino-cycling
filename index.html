@@ -1,58 +1,10 @@
-<!doctype html>
-<html lang="es">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#176b49">
-  <meta name="description" content="Plan y seguimiento ciclista para preparar el Camino del Norte">
-  <link rel="manifest" href="manifest.webmanifest">
-  <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <link rel="stylesheet" href="styles.css">
-  <title>Camino Cycling</title>
-</head>
-<body>
-<header class="hero">
-  <div><span class="kicker">CAMINO DEL NORTE · BASE 0</span><h1>Diciembre · Adaptación</h1><p>Acumular tiempo cómodo, crear hábito y terminar con margen.</p></div>
-  <button id="installBtn" class="install" hidden>Instalar app</button>
-</header>
-<main>
-  <section class="stats" aria-label="Resumen">
-    <article><strong id="doneStat">0/0</strong><span>completados</span></article>
-    <article><strong id="hoursStat">0 h</strong><span>horas registradas</span></article>
-    <article><strong id="kmStat">0 km</strong><span>distancia</span></article>
-    <article><strong id="rpeStat">—</strong><span>RPE medio</span></article>
-  </section>
-  <div class="toolbar">
-    <button id="addBtn" class="primary">＋ Añadir entrenamiento</button>
-    <button id="exportBtn">Exportar</button><label class="fileBtn">Importar<input id="importInput" type="file" accept="application/json"></label>
-  </div>
-  <section id="workoutList" class="weeks" aria-live="polite"></section>
-</main>
-<dialog id="workoutDialog">
-  <form id="workoutForm" method="dialog">
-    <div class="dialogHead"><h2 id="dialogTitle">Entrenamiento</h2><button type="button" class="icon" data-close aria-label="Cerrar">×</button></div>
-    <input id="workoutId" type="hidden">
-    <div class="formGrid">
-      <label>Fecha<input id="date" type="date" required></label>
-      <label>Tipo<select id="type"><option>Bici · Resistencia</option><option>Bici · Recuperación</option><option>Fuerza</option><option>Yoga/Pilates</option><option>Caminar</option></select></label>
-      <label>Duración prevista (min)<input id="planned" type="number" min="10" max="600" required></label>
-      <label class="wide">Descripción<textarea id="description" rows="3" required></textarea></label>
-    </div>
-    <fieldset><legend>Resultado</legend><label class="check"><input id="completed" type="checkbox"> Marcar como completado</label>
-      <div class="formGrid resultFields">
-        <label>Duración real (min)<input id="duration" type="number" min="0" max="1000"></label>
-        <label>Distancia (km)<input id="km" type="number" min="0" max="500" step="0.1"></label>
-        <label>RPE (1-10)<input id="rpe" type="number" min="1" max="10"></label>
-        <label>Potencia media (W)<input id="power" type="number" min="0" max="1000"></label>
-        <label>FC media<input id="hr" type="number" min="0" max="250"></label>
-        <label>Cadencia media<input id="cadence" type="number" min="0" max="200"></label>
-        <label class="wide">Sensaciones / dolor / nutrición<textarea id="notes" rows="3"></textarea></label>
-      </div>
-    </fieldset>
-    <p id="formError" class="error" role="alert"></p>
-    <div class="dialogActions"><button id="deleteBtn" type="button" class="danger">Eliminar</button><span></span><button type="button" data-close>Cancelar</button><button type="submit" class="primary">Guardar</button></div>
-  </form>
-</dialog>
-<footer>Los datos se guardan únicamente en este dispositivo. Haz una exportación periódica como copia de seguridad.</footer>
-<script src="app.js" defer></script>
-</body></html>
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#176b49"><meta name="description" content="Plan ciclista para el Camino del Norte"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icons/icon-192.png"><link rel="stylesheet" href="styles.css"><title>Camino Cycling V2</title></head><body>
+<header class="hero"><div><span class="kicker">CAMINO DEL NORTE</span><h1>Camino Cycling</h1><p id="syncText">Modo local</p></div><div class="headerActions"><button id="installBtn" hidden>Instalar</button><button id="authBtn">Acceder</button><button id="logoutBtn" hidden>Salir</button></div></header>
+<main><section class="monthNav"><button id="prevMonth" aria-label="Mes anterior">‹</button><h2 id="monthTitle"></h2><button id="nextMonth" aria-label="Mes siguiente">›</button></section>
+<section class="stats"><article><strong id="doneStat">0/0</strong><span>completados</span></article><article><strong id="hoursStat">0 h</strong><span>horas</span></article><article><strong id="kmStat">0 km</strong><span>distancia</span></article><article><strong id="rpeStat">—</strong><span>RPE medio</span></article></section>
+<nav class="tabs"><button class="active" data-tab="plan">Plan</button><button data-tab="history">Histórico</button></nav>
+<section id="planPanel"><div class="toolbar"><button id="addBtn" class="primary">＋ Entrenamiento</button><label class="fileBtn">Importar plan<input id="planInput" type="file" accept="application/json"></label><button id="exportBtn">Exportar copia</button><span id="pendingBadge"></span></div><section id="workoutList" aria-live="polite"></section></section>
+<section id="historyPanel" hidden><div id="history"></div></section></main>
+<dialog id="authDialog"><form id="authForm"><div class="dialogHead"><h2>Cuenta y sincronización</h2><button type="button" data-close="authDialog">×</button></div><p>Usa el mismo correo en todos tus dispositivos.</p><label>Correo<input id="email" type="email" required autocomplete="email"></label><label>Contraseña<input id="password" type="password" minlength="6" required autocomplete="current-password"></label><p id="authError" class="error"></p><div class="dialogActions"><button type="button" id="signupBtn">Crear cuenta</button><button type="submit" class="primary">Entrar</button></div></form></dialog>
+<dialog id="workoutDialog"><form id="workoutForm"><div class="dialogHead"><h2 id="dialogTitle">Entrenamiento</h2><button type="button" data-close="workoutDialog">×</button></div><input id="workoutId" type="hidden"><div class="formGrid"><label>Fecha<input id="date" type="date" required></label><label>Tipo<select id="type"><option>Bici · Resistencia</option><option>Bici · Recuperación</option><option>Bici · Técnica</option><option>Fuerza</option><option>Yoga/Pilates</option><option>Caminar</option></select></label><label>Duración prevista (min)<input id="planned" type="number" min="10" max="600" required></label><label>RPE objetivo<input id="targetRpe" type="text" placeholder="2-4"></label><label>Zona/potencia<input id="targetZone" type="text" placeholder="Z2 o 65-75% FTP"></label><label>Cadencia objetivo<input id="targetCadence" type="text" placeholder="80-90 rpm"></label><label class="wide">Objetivo<textarea id="objective" rows="2"></textarea></label><label class="wide">Estructura detallada<textarea id="description" rows="4" required></textarea></label><label class="wide">Nutrición/hidratación<textarea id="nutrition" rows="2"></textarea></label></div><fieldset><legend>Resultado</legend><label class="check"><input id="completed" type="checkbox"> Completado</label><div id="resultFields" class="formGrid"><label>Duración real (min)<input id="duration" type="number" min="0"></label><label>Distancia (km)<input id="km" type="number" min="0" step="0.1"></label><label>Desnivel (m)<input id="elevation" type="number" min="0"></label><label>RPE real (1-10)<input id="rpe" type="number" min="1" max="10"></label><label>Potencia media (W)<input id="power" type="number" min="0"></label><label>FC media<input id="hr" type="number" min="0"></label><label>Cadencia media<input id="cadence" type="number" min="0"></label><label class="wide">Sensaciones, molestias y alimentación<textarea id="notes" rows="3"></textarea></label></div></fieldset><p id="formError" class="error"></p><div class="dialogActions"><button id="deleteBtn" type="button" class="danger">Eliminar</button><span></span><button type="button" data-close="workoutDialog">Cancelar</button><button type="submit" class="primary">Guardar</button></div></form></dialog>
+<footer>V2 · Sincronización segura por usuario · Copia local para uso sin conexión</footer><script src="config.js"></script><script src="app.js" defer></script></body></html>
